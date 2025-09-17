@@ -7,7 +7,9 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0e1117;
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(88,166,255,0.08), transparent),
+              radial-gradient(1200px 600px at 110% 10%, rgba(255,118,20,0.05), transparent),
+              #0e1117;
   color: #f0f0f0;
   line-height: 1.6;
   padding: 2rem;
@@ -160,32 +162,30 @@ a {
 
 /* Coin Details */
 .coin-details-container {
-  max-width: 700px;
+  max-width: 1100px;
   margin: 40px auto;
-  text-align: center;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  background-color: #0f1420;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .coin-details-container a {
   display: inline-block;
   margin-bottom: 20px;
   text-decoration: none;
-  color: #007bff;
+  color: #58a6ff;
   font-weight: bold;
   transition: color 0.3s;
 }
 
 .coin-details-container a:hover {
-  color: #0056b3;
+  color: #86c3ff;
 }
 
 .coin-details-title {
-  font-size: 36px;
+  font-size: 32px;
   margin-bottom: 10px;
 }
 
@@ -197,7 +197,8 @@ a {
 .coin-details-description {
   font-size: 16px;
   margin-bottom: 20px;
-  color: #555;
+  color: #c9d1d9;
+  opacity: 0.92;
 }
 
 .coin-details-info h3,
@@ -219,13 +220,78 @@ a {
 }
 
 .coin-details-links a {
-  color: #007bff;
+  color: #58a6ff;
   text-decoration: none;
 }
 
 .coin-details-links a:hover {
   text-decoration: underline;
 }
+
+/* Hero */
+.coin-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 0 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 16px;
+}
+.coin-hero-left { display: flex; align-items: center; gap: 16px; }
+.coin-hero-image { width: 64px; height: 64px; filter: drop-shadow(0 6px 16px rgba(0,0,0,0.4)); animation: floatY 4s ease-in-out infinite; }
+.coin-hero-title { font-size: 28px; font-weight: 700; }
+.symbol-pill { font-size: 14px; font-weight: 600; color: #aab7c4; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 999px; margin-left: 8px; }
+.hero-sub { display: flex; gap: 10px; margin-top: 6px; }
+.rank-pill { background: rgba(88,166,255,0.12); color: #58a6ff; border: 1px solid rgba(88,166,255,0.25); padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+.change-pill { background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+.change-pill.up { color: #4caf50; border: 1px solid rgba(76,175,80,0.25); }
+.change-pill.down { color: #f44336; border: 1px solid rgba(244,67,54,0.25); }
+
+.coin-hero-right { text-align: right; }
+.price-large { font-size: 28px; font-weight: 800; letter-spacing: 0.2px; background: linear-gradient(90deg, #fff, #86c3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: glow 2.6s ease-in-out infinite; }
+.hover-readout { margin-top: 6px; color: #aab7c4; font-size: 13px; display: flex; flex-direction: column; gap: 2px; }
+.hover-price { font-weight: 700; color: #e6edf3; }
+.hover-meta { display: flex; align-items: center; gap: 10px; }
+.delta.up { color: #4caf50; }
+.delta.down { color: #f44336; }
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 0 rgba(134,195,255,0); }
+  50% { text-shadow: 0 0 24px rgba(134,195,255,0.25); }
+}
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* Stats grid */
+.coin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 18px 0 8px;
+}
+.stat-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 14px;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+.stat-card .label { color: #94a3b8; font-size: 12px; }
+.stat-card .value { color: #e6edf3; font-weight: 700; margin-top: 6px; display: block; }
+.stat-card .value.up { color: #5ee17a; }
+.stat-card .value.down { color: #ff7b77; }
+
+/* Chart */
+.chart-section { margin-top: 20px; }
+.range-controls { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.range-btn { background: rgba(255,255,255,0.06); color: #c9d1d9; border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 6px 10px; font-size: 12px; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
+.range-btn:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+.range-btn.active { background: rgba(88,166,255,0.18); color: #e6f1ff; border-color: rgba(88,166,255,0.35); }
+.chart-wrapper { height: 360px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 10px; }
+
+/* Utilities */
+.fade-in { animation: fadeIn 360ms ease both; }
 
 /* Modal */
 .modal-overlay {
