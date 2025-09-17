@@ -61,12 +61,12 @@ const CoinDetailsPage = () => {
                     <div className="price-large">${currentPrice?.toLocaleString()}</div>
                     {hoverPoint && (
                         <div className="hover-readout">
-                            <div className="hover-price">${hoverPoint.price.toLocaleString()}</div>
+                            <div className="hover-price">{hoverPoint.formattedPrice}</div>
                             <div className="hover-meta">
-                                <span>{new Date(hoverPoint.time).toLocaleString()}</span>
-                                {currentPrice && (
-                                    <span className={`delta ${hoverPoint.price - currentPrice >= 0 ? 'up' : 'down'}`}>
-                                        {(hoverPoint.price - currentPrice >= 0 ? '+' : '')}{(hoverPoint.price - currentPrice).toFixed(2)}
+                                <span>{hoverPoint.formattedTime}</span>
+                                {hoverPoint.priceChange !== null && (
+                                    <span className={`delta ${hoverPoint.priceChange >= 0 ? 'up' : 'down'}`}>
+                                        {hoverPoint.priceChange >= 0 ? '+' : ''}${hoverPoint.priceChange.toFixed(2)} ({hoverPoint.priceChangePercent >= 0 ? '+' : ''}{hoverPoint.priceChangePercent.toFixed(2)}%)
                                     </span>
                                 )}
                             </div>
@@ -117,7 +117,7 @@ const CoinDetailsPage = () => {
                     </div>
                 </div>
 
-                <CoinChart coinId={coin.id} onHoverPoint={setHoverPoint} />
+                <CoinChart coinId={coin.id} onHoverPoint={setHoverPoint} currentPrice={currentPrice} />
 
                 <div className="coin-details-links">
                     {coin.links?.homepage?.[0] && (

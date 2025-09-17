@@ -24,7 +24,7 @@ ChartJS.register(
 
 const API_URL = import.meta.env.VITE_COIN_API_URL
 
-const CoinChart = ({coinId, onHoverPoint}) => {
+const CoinChart = ({coinId, onHoverPoint, currentPrice}) => {
     const [chartData, setChartData] = useState(null)
     const [loading, setLoading] = useState(true)
     const [days, setDays] = useState(7)
@@ -64,7 +64,12 @@ const CoinChart = ({coinId, onHoverPoint}) => {
     const options = useMemo(() => ({
         responsive: true,
         maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
+        resizeDelay: 0,
+        interaction: { 
+            mode: 'index', 
+            intersect: false,
+            axis: 'x'
+        },
         plugins: {
             legend: { display: false },
             tooltip: {
@@ -76,7 +81,23 @@ const CoinChart = ({coinId, onHoverPoint}) => {
                         const p = tooltip.dataPoints[0]
                         const x = p.parsed.x
                         const y = p.parsed.y
-                        onHoverPoint({ time: x, price: y })
+                        
+                        // Calculate price change from current price
+                        let priceChange = null
+                        let priceChangePercent = null
+                        if (currentPrice) {
+                            priceChange = y - currentPrice
+                            priceChangePercent = ((y - currentPrice) / currentPrice) * 100
+                        }
+                        
+                        onHoverPoint({ 
+                            time: x, 
+                            price: y,
+                            priceChange,
+                            priceChangePercent,
+                            formattedTime: new Date(x).toLocaleString(),
+                            formattedPrice: `$${y.toLocaleString()}`
+                        })
                     } else {
                         onHoverPoint(null)
                     }
@@ -96,11 +117,17 @@ const CoinChart = ({coinId, onHoverPoint}) => {
             }
         },
         elements: {
-            point: { radius: 0, hoverRadius: 4 },
+            point: { 
+                radius: 0, 
+                hoverRadius: 6,
+                hoverBorderWidth: 2,
+                hoverBorderColor: '#58a6ff',
+                hoverBackgroundColor: '#ffffff'
+            },
             line: { borderWidth: 2 }
         },
         animation: { duration: 300, easing: 'easeOutQuart' }
-    }), [onHoverPoint, days])
+    }), [onHoverPoint, days, currentPrice])
 
     const ranges = [
         { label: '24H', value: 1 },
