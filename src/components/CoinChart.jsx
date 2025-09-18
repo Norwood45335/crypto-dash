@@ -11,6 +11,7 @@ import {
     TimeScale
 } from "chart.js";
 import 'chartjs-adapter-date-fns';
+import Spinner from "./Spinner";
 
 ChartJS.register(
     CategoryScale,
@@ -137,8 +138,6 @@ const CoinChart = ({coinId, onHoverPoint, currentPrice}) => {
         { label: '1Y', value: 365 }
     ]
 
-    if (loading) return <p>Loading chart...</p>
-
     return <div className="chart-section">
         <div className="range-controls">
             {ranges.map(r => (
@@ -149,11 +148,29 @@ const CoinChart = ({coinId, onHoverPoint, currentPrice}) => {
                 >{r.label}</button>
             ))}
         </div>
-        <div className="chart-wrapper">
-            <Line 
-                data={chartData}
-                options={options}
-            />
+        <div className="chart-wrapper" style={{ position: 'relative' }}>
+            {chartData && (
+                <Line 
+                    data={chartData}
+                    options={options}
+                />
+            )}
+            {loading && (
+                <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 10
+                }}>
+                    <Spinner />
+                </div>
+            )}
         </div>
     </div>
 }
