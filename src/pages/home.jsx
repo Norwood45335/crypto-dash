@@ -39,25 +39,46 @@ const HomePage = ({
     })
     return ( 
     <div>
-      <h1>Crypto Dash</h1>
-      {loading && <Spinner color='white' />}
-      {error && <div className='error'>{error}</div>}
-
-      <div className="top-controls">
-      <FilterInput filter={filter} onFilterChange={setFilter}/>
-      <LimitSelector limit={limit} onLimitChange={setLimit}/>
-      <SortSelector sortBy={sortBy} onSortChange={setSortBy} />
+      {/* Hero Section with Background Video */}
+      <div className="hero-section">
+        <video 
+          className="hero-video"
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+        >
+          <source src="/coins_falling.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="hero-overlay">
+          <div className="hero-content">
+            <h1 className="hero-title">Crypto Dash</h1>
+            <p className="hero-subtitle">Track cryptocurrency prices in real-time</p>
+          </div>
+        </div>
       </div>
 
-      {!loading && !error && (
-        <main className="grid">
-          {filteredCoins.length> 0 ? filteredCoins.map((coin) => (
-            <CoinCard key={coin.id} coin={coin} />
-          )) : (
-            <p>No matching coins</p>
-          )}
-        </main>
-      )}
+      <div className="main-content">
+        {loading && <Spinner color='white' />}
+        {error && <div className='error'>{error}</div>}
+
+        <div className="top-controls">
+        <FilterInput filter={filter} onFilterChange={setFilter}/>
+        <LimitSelector limit={limit} onLimitChange={setLimit}/>
+        <SortSelector sortBy={sortBy} onSortChange={setSortBy} />
+        </div>
+
+        {!loading && !error && (
+          <main className="grid">
+            {filteredCoins.length> 0 ? filteredCoins.map((coin) => (
+              <CoinCard key={coin.id} coin={coin} />
+            )) : (
+              <p>No matching coins</p>
+            )}
+          </main>
+        )}
+      </div>
     </div> );
 }
  
