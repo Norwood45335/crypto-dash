@@ -59,6 +59,7 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 @media (min-width: 480px) {
@@ -81,12 +82,32 @@ a {
 }
 
 .coin-card {
-  background-color: #161b22;
+  background: linear-gradient(145deg, #1a1f2e 0%, #161b22 50%, #0f1419 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease;
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(88, 166, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.coin-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 @media (min-width: 480px) {
@@ -102,7 +123,16 @@ a {
 }
 
 .coin-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.5),
+    0 8px 24px rgba(88, 166, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(88, 166, 255, 0.3);
+}
+
+.coin-card:hover::before {
+  opacity: 1;
 }
 
 .coin-header {
@@ -110,16 +140,51 @@ a {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.coin-header h2 {
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ffffff, #e0e6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .coin-image {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(255, 255, 255, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  filter: brightness(1.1) contrast(1.2) saturate(1.1);
+  backdrop-filter: blur(1px);
+}
+
+.coin-image:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    0 3px 8px rgba(255, 255, 255, 0.2),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .symbol {
   font-size: 0.9rem;
-  color: #aaa;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .positive {
@@ -686,7 +751,12 @@ a {
   transform: translate(-50%, -50%);
   z-index: 1;
   object-fit: cover;
-  filter: brightness(0.7) contrast(1.1);
+  filter: brightness(0.8) contrast(1.4) saturate(1.2) unsharp-mask(2px, 1.5);
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .hero-overlay {
@@ -774,23 +844,23 @@ a {
 
 @keyframes heroGlow {
   0% { 
-    text-shadow: 0 0 20px rgba(134, 195, 255, 0.3), 0 0 40px rgba(255, 215, 0, 0.2); 
+    text-shadow: 0 0 20px rgba(134, 195, 255, 0.3), 0 0 30px rgba(255, 215, 0, 0.1); 
   }
   100% { 
-    text-shadow: 0 0 30px rgba(134, 195, 255, 0.5), 0 0 60px rgba(255, 215, 0, 0.3); 
+    text-shadow: 0 0 30px rgba(134, 195, 255, 0.5), 0 0 45px rgba(255, 215, 0, 0.2); 
   }
 }
 
 /* Main content spacing after hero */
 .main-content {
   position: relative;
-  z-index: 5;
-  background: rgba(14, 17, 23, 0.95);
-  border-radius: 16px 16px 0 0;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   margin-top: -2rem;
-  padding: 2rem 1rem 1rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 768px) {
@@ -818,7 +888,12 @@ a {
   }
 }
 
-/* ...existing code... */
+/* Video quality optimizations */
+video {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: crisp-edges;
+}
 
 /* Utilities */
 .fade-in { animation: fadeIn 360ms ease both; }
